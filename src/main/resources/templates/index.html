@@ -10,38 +10,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-<!--                <div>Saludo</div>
-                <p th:text="Hola desde Thymeleaf">prueba</p>
-        <h1>Un cliente</h1>
-        <p>Nombre: <span th:text="${cliente.nombre}"></span></p>
-        <p>Apellidos <span th:text="${cliente.apellidos}"></span></p>
-        <p>Correo <span th:text="${cliente.correo}"></span></p>
-        <p>Telefono <span th:text="${cliente.telefono}"></span></p>-->
         <header th:replace="layout/plantilla :: header"/>
-        <h2>Lista de clientes</h2>
+        <div class="contenido">
+        <h2>Nuestros Articulos</h2>
         <a href="th:href=@{/nuevoCliente}"></a>
-        <div th:if="${cliente != null}">
+        <div th:if="${articulos != null and !articulos.empty}">
             <table border="1">
             <thead>
                 <tr>
-                    <th>Nombre</th>
-                    <th>Apelllidos</th>
-                    <th>Correo</th>
-                    <th>Telefono</th>
+                    <th>Descripcion</th>
+                    <th>Precio</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="item : ${clientes}">
-                    <td th:text="${item.nombre}"></td>
-                    <td th:text="${item.apellidos}"></td>
-                    <td th:text="${item.correo}"></td>
-                    <td th:text="${item.telefono}"></td>
+                <tr th:each="item : ${articulos}">
+                    <td th:text="${item.descripcion}"></td>
+                    <td th:text="${#numbers.formatDecimal{item.precio,3,2}}"></td>
+                    <td th:text="$@{/carrito/agregar/}+$ {item.idArticulo}">Comprar</td>
+
                 </tr>
             </tbody>
         </table>
         </div>
-        <div th:if="${clientes != null or clientes.empty}">
+        <div th:if="${articulos != null or articulos.empty}">
             La lista de clientes esta vacia
+        </div>
         </div>
         <footer th:replace="layout/plantilla :: footer"/>
     </body>

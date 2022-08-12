@@ -5,6 +5,7 @@
 package com.Tienda1.Controller;
 
 import com.Tienda1.Domain.Cliente;
+import com.Tienda1.Service.ArticuloService;
 import com.Tienda1.dao.ClienteDao;
 import com.Tienda1.service.ClienteService;
 import java.util.Arrays;
@@ -24,22 +25,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Slf4j
 public class IndexController {
     @Autowired
-    private ClienteDao clienteDao;
-     @GetMapping("/")
-     public String inicio (Model model){
-         Cliente cliente = new Cliente("Dilan","Aguilar","dilanagui11@gmail.com","8820-2655");   
-         var clientes = clienteService.getClientes();
-         model.addAttribute("clientes", clientes);
-         return "index";
-         
-     }
-     @GetMapping("/nuevoCliente")
-     public String nuevoCliente(Cliente cliente){
-         return "modificarCliente";
-     }
-     @GetMapping("/guardarCliente")
-     public String guardarCliente(Cliente cliente){
-        clienteService.save(cliente);
-        return "redirect:/nuevoCliente"
-     }
+    private ArticuloService articuloService;
+    @GetMapping("/")
+    public String inicio(Model model){
+        var articulos = articuloService.getArticulos(true);
+        model.addAttribute("articulos",articulos);
+        return "index";
+    }
+    
+     
 }
