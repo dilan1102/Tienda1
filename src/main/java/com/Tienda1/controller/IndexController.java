@@ -6,9 +6,11 @@ package com.Tienda1.Controller;
 
 import com.Tienda1.Domain.Cliente;
 import com.Tienda1.dao.ClienteDao;
+import com.Tienda1.service.ClienteService;
 import java.util.Arrays;
-import lombok.experimental.var;
+
 import lombok.extern.slf4j.Slf4j;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +27,19 @@ public class IndexController {
     private ClienteDao clienteDao;
      @GetMapping("/")
      public String inicio (Model model){
-         Cliente cliente = new Cliente("Dilan","Aguilar","dilanagui11@gmail.com","8820-2655");
-         /*model.addAttribute("cliente", cliente);
-         
-         Cliente cliente2 = new Cliente("Dilan","Aguilar","dilanagui11@gmail.com","8820-2655");*/
-         Iterable<Cliente> clientes = clienteDao.findAll();
+         Cliente cliente = new Cliente("Dilan","Aguilar","dilanagui11@gmail.com","8820-2655");   
+         var clientes = clienteService.getClientes();
          model.addAttribute("clientes", clientes);
          return "index";
          
+     }
+     @GetMapping("/nuevoCliente")
+     public String nuevoCliente(Cliente cliente){
+         return "modificarCliente";
+     }
+     @GetMapping("/guardarCliente")
+     public String guardarCliente(Cliente cliente){
+        clienteService.save(cliente);
+        return "redirect:/nuevoCliente"
      }
 }
